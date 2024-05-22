@@ -10,6 +10,7 @@ export const Layout = () => {
     color: themeColor === 'light' ? '#000000' : '#ffffff',
     height: '100vh',
     overflow: 'hidden',
+    minHeight: '600px', //최소 높이 설정
   };
   const showNav = location.pathname !== '/login';
 

@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Switcher } from '../Login/LoginStyles';
 import { Check, Error, Eyes, Form, InputDiv, SignUpInput, SignUpPart, SignUpWrapper, Svg } from './SignUpStyles';
 import { useEffect, useState } from 'react';
-import EmailAuthModal from '../../components/EmailAuthModal';
+import EmailAuthModal from '../../components/EmailAuthModal/EmailAuthModal';
 import { useTheTheme } from '../../components/Theme';
 import { ReactComponent as Eye } from '../../assets/eye.svg';
 import { ReactComponent as EyeOff } from '../../assets/eye_off.svg';

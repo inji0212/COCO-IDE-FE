@@ -53,13 +53,13 @@ export const CreateContainer = styled.div<{ closing: boolean }>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1001;
+  z-index: 10001;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 500px;
   height: 400px;
   padding: 30px;
   animation: ${props => (props.closing ? fadeOut : fadeIn)} 0.3s ease-out forwards;
-  border: 1px solid ${({ theme }) => theme.text};
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -76,14 +76,14 @@ export const Container = styled.div<{ closing: boolean }>`
   transform: translate(-50%, -50%);
   height: 300px;
   width: 50vw;
-  z-index: 1001;
+  z-index: 10001;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 0.5px solid;
   width: 500px;
   height: 400px;
   padding: 30px;
+  border-radius: 5px;
   animation: ${props => (props.closing ? fadeOut : fadeIn)} 0.3s ease-out forwards;
-  border: 1px solid ${({ theme }) => theme.text};
 `;
 export const Overlay = styled.div<{ closing: boolean }>`
   position: fixed;
@@ -93,6 +93,5 @@ export const Overlay = styled.div<{ closing: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5); // 반투명 검은색 배경
-  backdrop-filter: blur(2px);
-  z-index: 1000;
+  z-index: 100;
 `;

@@ -6,7 +6,7 @@ import { ReactComponent as FolderAddDarkIcon } from '../../../assets/folder-addd
 import { useTheTheme } from '../../Theme';
 import useProjectStore from '../../../state/IDE/ProjectState';
 import { useState } from 'react';
-import { ProjectWrapper, Title } from '../IdeStyle';
+import { FileTreeWrapper, ProjectWrapper, Title, TreeWrapper } from '../IdeStyle';
 import { createFolder, createFile } from '../ProjectApi';
 import FileTree from './FileTree';
 
@@ -78,7 +78,7 @@ export default function FileList() {
           <IconButton
             size="small"
             onClick={() => {
-              setIsCreatingFolder(true);
+              setIsCreatingFolder(!isCreatingFile);
               setCurrentParentId('0');
             }}
           >
@@ -87,7 +87,7 @@ export default function FileList() {
           <IconButton
             size="small"
             onClick={() => {
-              setIsCreatingFile(true);
+              setIsCreatingFile(!isCreatingFile);
               setCurrentParentId('0');
             }}
           >
@@ -95,21 +95,22 @@ export default function FileList() {
           </IconButton>
         </span>
       </Title>
-
-      <FileTree
-        isCreatingFolder={isCreatingFolder}
-        setIsCreatingFolder={setIsCreatingFolder}
-        setIsCreatingFile={setIsCreatingFile}
-        isCreatingFile={isCreatingFile}
-        handleCreateFolder={handleCreateFolder}
-        handleCreateFile={handleCreateFile}
-        newFolderName={newFolderName}
-        setNewFolderName={setNewFolderName}
-        newFileName={newFileName}
-        setNewFileName={setNewFileName}
-        currentParentId={currentParentId}
-        setCurrentParentId={setCurrentParentId}
-      />
+      <TreeWrapper>
+        <FileTree
+          isCreatingFolder={isCreatingFolder}
+          setIsCreatingFolder={setIsCreatingFolder}
+          setIsCreatingFile={setIsCreatingFile}
+          isCreatingFile={isCreatingFile}
+          handleCreateFolder={handleCreateFolder}
+          handleCreateFile={handleCreateFile}
+          newFolderName={newFolderName}
+          setNewFolderName={setNewFolderName}
+          newFileName={newFileName}
+          setNewFileName={setNewFileName}
+          currentParentId={currentParentId}
+          setCurrentParentId={setCurrentParentId}
+        />
+      </TreeWrapper>
     </ProjectWrapper>
   );
 }

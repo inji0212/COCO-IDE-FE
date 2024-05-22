@@ -9,6 +9,7 @@ import { Container, Overlay } from './ModalOverlay';
 import { Project } from '../state/IDE/ProjectState';
 import useProjectStore from '../state/IDE/ProjectState';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../state/AuthStore';
 
 interface PjListProps {
   onClose: () => void;
@@ -98,13 +99,15 @@ const PjList: React.FC<PjListProps> = ({ onClose }) => {
   }, [loadProjects]);
 
   const handleProjectClick = (projectId: string) => {
+    const memberId = useAuthStore.getState().memberId;
     selectProject(projectId);
-    navigate(`/ide/${projectId}`);
+    navigate(`/ide/${memberId}/${projectId}`);
     onClose();
   };
   const handleDelete = (projectId: string, projectName: string) => {
     if (window.confirm(`'${projectName}'을(를) 삭제할건가요?`)) {
       removeProject(projectId);
+      console.log('Message deleted:', projectName);
     }
   };
   const currentTheme = themeColor === 'light' ? lightTheme : darkTheme;

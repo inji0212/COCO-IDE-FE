@@ -13,13 +13,28 @@ export const MainLogo = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 export const MainImg = styled.div`
   width: 60%;
   height: 100%;
+  position: relative;
   img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%); /* Center the image */
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
+  }
+  @media (max-width: 800px) {
+    display: none;
   }
   background-color: ${({ theme }) => (theme.themeColor === 'dark' ? theme.lightColor : 'transparent')};
 `;

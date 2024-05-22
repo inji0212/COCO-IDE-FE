@@ -2,8 +2,8 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children?: React.ReactNode;
+  onPasswordChange?: (newPassword: string) => void;
   theme: string;
-  pw?: string;
 }
 
 import React, { useEffect, useState } from 'react';
@@ -12,7 +12,6 @@ import { CancleBtn, ConfirmDiv, ConfirmWrapper, Eyes, SaveBtn } from './ConfirmP
 import { ReactComponent as Eye } from '../../assets/eye.svg';
 import { ReactComponent as EyeOff } from '../../assets/eye_off.svg';
 import { ReactComponent as PwCheck } from '../../assets/pwCheck.svg';
-import axios from 'axios';
 import address from '../Address';
 
 const Modal: React.FC<ModalProps> = ({ isOpen, children, theme }) => {
@@ -58,7 +57,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, children, theme }) => {
   );
 };
 
-const Confirmpassword: React.FC<ModalProps> = ({ isOpen, onClose, theme, pw }) => {
+const Confirmpassword: React.FC<ModalProps> = ({ isOpen, onClose, theme, onPasswordChange }) => {
   const [error, setError] = useState('');
   const [password, setPassword] = useState('');
   const [changePw, setChangePw] = useState('');
@@ -114,20 +113,25 @@ const Confirmpassword: React.FC<ModalProps> = ({ isOpen, onClose, theme, pw }) =
     if (password == '' || changePw === '' || confirmPw === '') {
       handleError('입력하지 않은 필드가 있습니다.');
       return;
-    } else if (password !== pw) {
-      handleError('현재 비밀번호가 일치하지 않습니다.');
-      return;
     } else if (!passwordRegex.test(changePw)) {
       return;
     } else if (changePw !== confirmPw) {
       handleError('변경할 비밀번호가 일치하지 않습니다.');
       return;
+    } else if (changePw == password) {
+      handleError('변경할 비밀번호가 현재 비밀번호와 일치합니다.');
+      return;
     }
     try {
-      const response = await address.post(`/api/members/id/profile`, {
-        newPassword: confirmPw,
+      console.log(password);
+      const response = await address.post('/api/members/verify-password', {
+        password: password,
       });
       console.log(response.data);
+      if (onPasswordChange) {
+        onPasswordChange(changePw);
+        // onPasswordChange가 정의되어 있는 경우에만 호출
+      }
       enhancedOnClose();
     } catch (error) {
       alert(error);

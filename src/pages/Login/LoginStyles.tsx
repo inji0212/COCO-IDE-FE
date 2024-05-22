@@ -12,6 +12,9 @@ export const LoginLogo = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const Explain = styled.div`
@@ -26,6 +29,12 @@ export const LoginPart = styled.div`
   height: 100%;
   align-items: center;
   justify-content: center;
+  color: black;
+  @media (max-width: 800px) {
+    width: 100%;
+    background-color: ${({ theme }) => (theme.themeColor === 'dark' ? theme.darkColor : 'transparent')};
+    color: ${({ theme }) => (theme.themeColor === 'dark' ? 'white' : 'black')};
+  }
   background-color: ${({ theme }) => (theme.themeColor === 'dark' ? theme.lightColor : 'transparent')};
 `;
 

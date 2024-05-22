@@ -16,13 +16,13 @@ const FirstMain = () => {
             <Highlight>C</Highlight>ollaborative
           </span>
           <span>
-            <Highlight>O</Highlight>line
+            <Highlight>O</Highlight>nline
           </span>
           <span>
             <Highlight>C</Highlight>oding
           </span>
           <span>
-            <Highlight>O</Highlight>rganize
+            <Highlight>O</Highlight>rganizer
           </span>
           <div className="flex justify-center">
             <FontColor className="text-2xl mt-4">

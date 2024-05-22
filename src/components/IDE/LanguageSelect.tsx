@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { CreateContainer, Overlay, modalRoot } from '../ModalOverlay';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import useAuthStore from '../../state/AuthStore';
 
 interface Props {
   onSelectChange: (language: string) => void;
@@ -23,6 +24,7 @@ const FontColor = styled.h1`
 const LanguageSelector: React.FC<Props> = ({ onSelectChange, onClose }) => {
   const { themeColor } = useTheTheme();
   const [language, setLanguage] = useLanguageStore(state => [state.language, state.setLanguage]);
+  const { memberId } = useAuthStore();
   const [newProjectName, setNewProjectName] = useState('');
 
   const navigate = useNavigate();
@@ -47,25 +49,28 @@ const LanguageSelector: React.FC<Props> = ({ onSelectChange, onClose }) => {
     const newProject = {
       name: newProjectName,
       language: language,
-      memberId: 1,
+      memberId: memberId,
     };
     try {
+      console.log(newProject);
       const createdProject = await createProject(newProject);
-      console.log(createdProject);
+      console.log('생성', createdProject);
       // 백엔드에서 생성된 실제 프로젝트 ID 사용
       const projectToAdd = {
-        id: createdProject,
-        name: newProjectName,
-        language: language,
+        id: createdProject.projectId,
+        name: createdProject.name,
+        language: createdProject.language,
         folders: [],
         files: [],
       };
 
       // 새 프로젝트를 Zustand 스토어에 추가
-      useProjectStore.getState().addProject(projectToAdd);
+      const projectStore = useProjectStore.getState();
+      projectStore.addProject(projectToAdd);
+      projectStore.selectProject(createdProject.projectId);
       setNewProjectName('');
       onClose();
-      navigate(`/ide/${createdProject}`);
+      navigate(`/ide/${memberId}/${createdProject.projectId}`);
     } catch (error) {
       console.error('Error creating project:', error);
       alert('프로젝트 생성에 실패했습니다.');
@@ -103,6 +108,14 @@ const LanguageSelector: React.FC<Props> = ({ onSelectChange, onClose }) => {
           onChange={handleChange}
           placeholder={`Filter By Category`}
           size="small"
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 200,
+                overflowY: 'auto',
+              },
+            },
+          }}
           sx={{
             '& .MuiSelect-select': {
               backgroundColor: themeColor === 'light' ? '#ffffff' : '#ffffff',
@@ -111,7 +124,7 @@ const LanguageSelector: React.FC<Props> = ({ onSelectChange, onClose }) => {
             '& .MuiOutlinedInput-root': {
               borderColor: '#28b381',
             },
-            maxWidth: 'max-content',
+            maxWidth: '100px',
           }}
         >
           {LanguageOptions.map(option => (
@@ -121,11 +134,17 @@ const LanguageSelector: React.FC<Props> = ({ onSelectChange, onClose }) => {
           ))}
         </Select>
         <span className="flex justify-end gap-3">
-          <CreateCustomButton className="bg-green-500 font-pretendard font-normal" onClick={handleCreateProject}>
+          <CreateCustomButton
+            className="bg-green-500 font-pretendard font-normal cursor-pointer"
+            onClick={handleCreateProject}
+          >
             생성 하기
           </CreateCustomButton>
 
-          <CreateCustomButton className="text-green-500 font-pretendard font-normal" onClick={handleClose}>
+          <CreateCustomButton
+            className="text-green-500 font-pretendard font-normal cursor-pointer"
+            onClick={handleClose}
+          >
             취소 하기
           </CreateCustomButton>
         </span>

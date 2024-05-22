@@ -8,7 +8,7 @@ interface LanguageStore {
 }
 
 const useLanguageStore = create<LanguageStore>(set => ({
-  language: 'javascript',
+  language: 'python',
   setLanguage: language => set({ language }),
   languageSelector: false,
   setLanguageSelector: (languageSelector: boolean) => set({ languageSelector }),

@@ -1,7 +1,14 @@
 import axios from 'axios';
+const username = 'coco';
+const password = 'coco';
+const token = btoa(`${username}:${password}`);
 
 const address = axios.create({
-  baseURL: 'https://kd8514eb63fc1a.user-app.krampoline.com',
+  baseURL: 'http://43.201.76.117:8080',
+  headers: {
+    Authorization: `Basic ${token}`,
+  },
+  withCredentials: true,
 });
 
 export default address;

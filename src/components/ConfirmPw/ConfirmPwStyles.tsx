@@ -24,6 +24,9 @@ export const ConfirmDiv = styled.div`
   background-color: white;
   align-items: center;
   width: 100%;
+  @media (max-width: 1000px) {
+    min-width: 50%;
+  }
   height: 10%;
   border: 1px solid #28b381;
   border-radius: 5px;

@@ -14,6 +14,9 @@ export const SignUpPart = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 export const Form = styled.form`
   display: flex;

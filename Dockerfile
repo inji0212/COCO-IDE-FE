@@ -1,26 +1,27 @@
-# Node.js 16 버전을 베이스 이미지로 사용합니다.
-FROM node:16
+# 빌드 스테이지
+FROM node:lts as build
 
-# 작업 디렉토리를 설정합니다.
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# package.json과 package-lock.json 파일을 복사합니다.
-COPY package*.json ./
+COPY package.json .
 
-# 의존성을 설치합니다.
-RUN npm ci
+RUN npm install
 
-# 소스 파일을 모두 복사합니다.
 COPY . .
 
-# 애플리케이션을 빌드합니다.
 RUN npm run build
 
-# 정적 파일을 서빙하기 위해 serve 패키지를 설치합니다.
-RUN npm install -g serve
+# Nginx를 사용하는 런타임 스테이지
+FROM nginx:stable-alpine
 
-# 컨테이너의 3000 포트를 외부에 노출합니다.
-EXPOSE 3000
+# 기본 Nginx 설정을 제거하고 새로운 설정을 복사
+RUN rm -rf /etc/nginx/conf.d
+COPY conf /etc/nginx
 
-# serve 명령어를 사용하여 빌드된 정적 파일을 서빙합니다.
-CMD ["serve", "-s", "build"]
+# 빌드 결과물을 Nginx의 웹 루트로 복사
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+# Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]

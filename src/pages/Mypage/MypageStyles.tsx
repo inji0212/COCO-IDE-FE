@@ -6,19 +6,22 @@ export const MainPageWrapper = styled.div`
   width: 100%;
   display: flex;
   padding: 0 200px 0px 200px;
+  @media (max-width: 1000px) {
+    padding: 10px;
+  }
   flex-direction: column;
+  white-space: nowrap;
 `;
 export const AttendanceDiv = styled.div`
   border-radius: 15px;
   background-color: ${({ theme }) => (theme.themeColor === 'light' ? '#e1f9f0' : '#23BE87')};
   height: 32%;
   width: 100%;
-  padding: 30px 50px;
-  padding: 30px 50px;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const UserInfo = styled.div`
@@ -28,6 +31,10 @@ export const UserInfo = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  @media (max-width: 800px) {
+    width: 100%;
+    height: 80%;
+  }
 `;
 export const EditUser = styled.div`
   display: flex;
@@ -42,7 +49,6 @@ export const EditUser = styled.div`
 `;
 export const UserInput = styled.input`
   width: 95%;
-  /* outline: none; */
   height: 100%;
   outline-color: #28b381;
   border-radius: 5px;
@@ -75,5 +81,9 @@ export const Save = styled.button`
   &:hover {
     cursor: pointer;
     opacity: 0.8;
+  }
+  @media (max-width: 800px) {
+    height: 9%;
+    width: 25%;
   }
 `;

@@ -47,13 +47,13 @@ const Login = () => {
       // response.data에서 닉네임, 이메일 저장해서 main이랑 mypage에 사용
       // localStorage.setItem('accessToken', response.data.accessToken);
       // localStorage.setItem('refreshToken', response.data.refreshToken);
-      alert('로그인 성공');
+      // alert('로그인 성공');
       //유저정보에 없거나 비밀번호,아이디 틀리면 에러바로 뜨게
       //메인으로 가게 해야함
-      navigate(`/mypage/${memberId}`);
+      navigate(`/main/${memberId}`);
     } catch (e) {
       //에러 캐치
-      alert('로그인 실패');
+      setError('아이디 또는 비밀번호를 잘못 입력했습니다.다시 확인해주세요.');
       console.log(e);
     } finally {
       setLoading(false);
@@ -70,13 +70,13 @@ const Login = () => {
             <Highlight>C</Highlight>ollaborative
           </span>
           <span>
-            <Highlight>O</Highlight>line
+            <Highlight>O</Highlight>nline
           </span>
           <span>
             <Highlight>C</Highlight>oding
           </span>
           <span>
-            <Highlight>O</Highlight>rganize
+            <Highlight>O</Highlight>rganizer
           </span>
           <div className="flex justify-center">
             <FontColor className="text-2xl mt-4">
@@ -117,7 +117,7 @@ const Login = () => {
                 transition: background-color 5000s ease-in-out 0s;}`}
         </style>
         <Logindiv onSubmit={onSubmit}>
-          <span className="mb-5 text-lg text-black">이메일</span>
+          <span className="mb-5 text-lg">이메일</span>
           <Input
             onChange={onChange}
             name="email"
@@ -126,7 +126,7 @@ const Login = () => {
             required
             className="mb-14 text-black"
           />
-          <span className="mb-5 text-lg text-black">비밀번호</span>
+          <span className="mb-5 text-lg">비밀번호</span>
           <Input
             onChange={onChange}
             name="password"
@@ -137,8 +137,8 @@ const Login = () => {
           />
           <Input type="submit" value="로그인" />
         </Logindiv>
-        {error !== '' ? <Error>{error}</Error> : null}
-        <Switcher className="text-black mt-7">
+        {error !== '' ? <Error className="mt-2">{error}</Error> : null}
+        <Switcher className="mt-7">
           아직 회원이 아니라면?{' '}
           <Link to="/signup" className="underline">
             회원가입 하러 가기 &rarr;

@@ -3,7 +3,7 @@ import { ReactComponent as LightLogo } from '../assets/logo-dark.svg';
 import { ReactComponent as UserIcon } from '../assets/userIcon.svg';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useTheTheme } from '../components/Theme';
@@ -40,11 +40,16 @@ const Half2 = styled.div`
     const isMainPage = location.pathname === '/';
     return isMainPage && theme.themeColor === 'dark' ? theme.lightColor : 'transparent';
   }};
+  @media (max-width: 800px) {
+    background-color: ${({ theme }) => (theme.themeColor === 'dark' ? theme.darkColor : 'transparent')};
+  }
 `;
 
 const MenuContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.borderColor};
+  background-color: ${({ theme }) => (theme.themeColor === 'dark' ? theme.darkColor : theme.lightColor)};
   display: flex;
+  z-index: 5;
   flex-direction: column;
   gap: 0.5rem;
   border-radius: 0.5rem;
@@ -53,24 +58,46 @@ const MenuContainer = styled.div`
   position: absolute;
   top: 4rem;
   right: 0.25rem;
+  p {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  z-index: 100;
 `;
 
 export default function Header() {
+  const navigate = useNavigate();
   const { themeColor, toggleTheme } = useTheTheme();
   const [menu, setMenu] = useState(false);
   const location = useLocation();
-  const memberId = useAuthStore(state => state.memberId);
+  const { clearAuthInfo, memberId } = useAuthStore(state => ({
+    clearAuthInfo: state.clearAuthInfo,
+    memberId: state.memberId,
+  }));
   const showIcons = location.pathname !== '/' && location.pathname !== '/signup';
   const isSpecialPage =
-    location.pathname === '/chat' ||
-    location.pathname === '/ide' ||
-    location.pathname === '/main' ||
+    location.pathname === `/chat/${memberId}` ||
+    location.pathname === `/ide//${memberId}` ||
+    location.pathname === `/main/${memberId}` ||
     location.pathname === `/mypage/${memberId}`;
+
+  const Logout = () => {
+    clearAuthInfo();
+    alert('로그아웃되었습니다.');
+    setMenu(false);
+    navigate('/');
+  };
+
+  const isLoggedIn = memberId !== '';
+  const OnClick = () => {
+    setMenu(false);
+  };
 
   return (
     <Container>
       <Half>
-        <Link to="/">{themeColor === 'light' ? <LightLogo /> : <DarkLogo />}</Link>
+        <Link to={isLoggedIn ? `/main/${memberId}` : '/'}>{themeColor === 'light' ? <LightLogo /> : <DarkLogo />}</Link>
       </Half>
       <Half2>
         <span style={{ marginLeft: 'auto' }}>
@@ -83,22 +110,26 @@ export default function Header() {
               )}
             </IconButton>
           )}
-          {showIcons && (
-            <IconButton
-              onClick={() => {
-                setMenu(!menu);
-              }}
-            >
-              <UserIcon />
-            </IconButton>
-          )}
-          {menu === true ? (
-            <MenuContainer>
-              <p>Logout</p>
-              <hr></hr>
-              <Link to={`/mypage/${memberId}`}>my Page</Link>
-            </MenuContainer>
-          ) : null}
+          <>
+            {showIcons && (
+              <IconButton
+                onClick={() => {
+                  setMenu(!menu);
+                }}
+              >
+                <UserIcon />
+              </IconButton>
+            )}
+            {menu === true ? (
+              <MenuContainer>
+                <p onClick={Logout}>Logout</p>
+                <hr></hr>
+                <Link to={`/mypage/${memberId}`} onClick={OnClick}>
+                  My Page
+                </Link>
+              </MenuContainer>
+            ) : null}
+          </>
         </span>
       </Half2>
     </Container>

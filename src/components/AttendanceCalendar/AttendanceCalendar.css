@@ -1,0 +1,40 @@
+/* 기본 스타일 설정 */
+.calendar-container {
+  width: 100%;
+  max-width: 90%;
+  margin: 20px auto;
+}
+
+.react-calendar-heatmap .color-empty {
+  fill: #ebedf0;
+}
+
+.react-calendar-heatmap .color-gitlab-1 {
+  fill: #9be9a8;
+}
+
+.react-calendar-heatmap .color-gitlab-2 {
+  fill: #40c463;
+}
+
+.react-calendar-heatmap .color-gitlab-3 {
+  fill: #30a14e;
+}
+
+.react-calendar-heatmap .color-gitlab-4 {
+  fill: #216e39;
+}
+
+.react-calendar-heatmap .color-today {
+  stroke: green;
+  stroke-width: 1px;
+}
+/* 월(month) 글씨 색상 변경 */
+.react-calendar-heatmap .react-calendar-heatmap-month-label {
+  fill: black; /* 원하는 글씨 색상 */
+}
+
+/* 요일(weekday) 글씨 색상 변경 */
+.react-calendar-heatmap .react-calendar-heatmap-weekday-label {
+  fill: black; /* 원하는 글씨 색상 */
+}

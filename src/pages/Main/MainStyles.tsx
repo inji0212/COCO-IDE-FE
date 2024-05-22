@@ -102,8 +102,6 @@ export const FolderButton = styled.button`
   align-items: center;
   justify-content: space-between;
   height: 40px;
-  transition: background-color 0.6s ease;
-
   margin-top: 10px;
   &:hover {
     background-color: rgba(118, 193, 175, 0.3);
@@ -125,7 +123,6 @@ export const ChatButton = styled(Link)`
   display: flex;
   align-items: center;
   height: 40px;
-  transition: background-color 0.6s ease;
 
   &:hover {
     background-color: rgba(118, 193, 175, 0.3);
@@ -293,7 +290,7 @@ export const AttendButton = styled.button`
 export const Date = styled.div`
   background-color: white;
   height: 150px;
-  width: 150px;
+  width: 130px;
   border-radius: 50%;
   position: relative; // AttendanceImage의 부모 요소가 됨
 `;
@@ -302,15 +299,15 @@ export const Month = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 45px;
+  margin-top: 40px;
 `;
 export const Day = styled.p`
   color: black;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: -30px;
-  margin-top: 50px;
+  margin-bottom: 0px;
+  margin-top: 55px;
 `;
 const Stamp = keyframes`
   0% {
@@ -326,13 +323,13 @@ const Stamp = keyframes`
     opacity: 1;
   }
 `;
-export const AttendanceImage = styled.img<{ show: boolean }>`
-  display: ${({ show }) => (show ? 'block' : 'none')};
-  height: 150px;
-  width: 150px;
+export const AttendanceImage = styled.img<{ $show: boolean }>`
+  display: ${({ $show }) => ($show ? 'block' : 'none')};
+  height: 140px;
+  width: 140px;
   position: absolute; // 스크롤에 따라 이동하지 않도록 위치 설정
-  margin-top: -210px;
-  margin-left: 25px;
+  margin-top: -200px;
+  margin-left: 30px;
   z-index: 1; // Date 위에 위치하기 위해 z-index 사용
   animation: ${Stamp} 0.5s ease-out forwards;
 `;
@@ -370,7 +367,7 @@ export const ModifyPj = styled.p`
   font-size: 18px;
 `;
 
-export const ModifyPjBtn = styled(Link)`
+export const ModifyPjBtn = styled.button`
 background-color: white;
 padding: 20px;
 border-radius: 5px;
@@ -436,8 +433,20 @@ export const Chatmore = styled(Link)`
   margin-top: 20px;
   margin-right: 10px;
   font-size: 8px;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
-
+export const AttendCalender = styled(Link)`
+  color: ${({ theme }) => theme.text};
+  font-style: normal;
+  font-weight: 500;
+  margin-top: 20px;
+  font-size: 10px;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 export const Chatmain = styled.div`
   border-top: 1px solid rgba(102, 102, 102, 0.6);
   border-bottom: 1px solid rgba(102, 102, 102, 0.6);
@@ -461,16 +470,19 @@ export const UserContainer = styled.div`
   align-items: center;
   margin: 0px 10px 0px 10px;
 `;
+export const MyUserContainer = styled(UserContainer)`
+  margin: 0px 10px 20px 10px;
+`;
 
 export const UserName = styled.h1`
-  font-size: 8px;
-  margin-top: 5px;
+  font-size: 10px;
+  margin-top: 0.6rem;
   white-space: nowrap;
 `;
 
 export const UserIcon = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
 `;
 
@@ -484,12 +496,15 @@ export const MessageFlexContainer = styled.div`
 export const MessageOther = styled.div`
   align-self: flex-start;
   display: flex;
-  margin: 0px 5px 0px 0px;
-  padding: 0;
+  margin: 9px 0px;
+  align-items: flex-end;
+  width: 100%;
 `;
 
 export const MessageMine = styled(MessageOther)`
-  align-self: flex-end;
+  margin-right: 10px;
+  align-items: flex-end;
+  justify-content: flex-end;
 `;
 
 export const MessageMinetext = styled.div`
@@ -506,30 +521,43 @@ export const MessageMinetext = styled.div`
   color: black;
   max-width: 265px;
   @media (max-width: 1250px) {
-    max-width: 55vw;
-  }
-  @media (max-width: 1200px) {
-    max-width: 54.5vw;
-  }
-  @media (max-width: 1150px) {
-    max-width: 54vw;
-  }
-  @media (max-width: 1100px) {
-    max-width: 53.5vw;
-  }
-  @media (max-width: 1050px) {
-    max-width: 53vw;
-  }
-  @media (max-width: 1000px) {
-    max-width: 52.5vw;
-  }
-  @media (max-width: 950px) {
     max-width: 52vw;
   }
+  @media (max-width: 1200px) {
+    max-width: 51.5vw;
+  }
+  @media (max-width: 1150px) {
+    max-width: 51vw;
+  }
+  @media (max-width: 1100px) {
+    max-width: 50.5vw;
+  }
+  @media (max-width: 1050px) {
+    max-width: 50vw;
+  }
+  @media (max-width: 1000px) {
+    max-width: 49.5vw;
+  }
+  @media (max-width: 950px) {
+    max-width: 49vw;
+  }
   @media (max-width: 900px) {
-    max-width: 245px;
+    max-width: 220px;
   }
 `;
 export const MessageOthertext = styled(MessageMinetext)`
   background-color: #fff;
+`;
+export const Timestamp = styled.h1`
+  font-size: 12px;
+  margin-bottom: 10px;
+`;
+export const Timestampmine = styled.h1`
+  font-size: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  white-space: nowrap;
 `;

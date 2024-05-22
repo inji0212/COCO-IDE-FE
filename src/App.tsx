@@ -3,6 +3,7 @@ import Routers from './routes/Router';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import { ThemeProvider } from './components/Theme';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const AppStyles = createGlobalStyle`
   ${reset};

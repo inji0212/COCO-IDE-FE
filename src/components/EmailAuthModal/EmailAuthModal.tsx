@@ -8,29 +8,23 @@ interface ModalProps {
 }
 
 import React, { useEffect, useRef, useState } from 'react';
-import '../components/Animation.css';
-import address from './Address';
+import '../../components/Animation.css';
+import address from '../Address';
+import { EmailDiv, ModalContent } from './EmailAuthModalStyles';
 
-const Modal: React.FC<ModalProps> = ({ isOpen, children, theme }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, children, theme, onClose }) => {
   const backgroundColor = theme === 'light' ? 'white' : '#1C2631';
 
   if (!isOpen) return null;
 
+  const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        height: '100%',
-        width: '100%',
-        zIndex: '10',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        backdropFilter: 'blur(2px)',
-      }}
-    >
-      <div
+    <EmailDiv onClick={handleBackgroundClick}>
+      <ModalContent
         style={{
           position: 'absolute',
           top: '50%',
@@ -46,10 +40,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, children, theme }) => {
           alignItems: 'center',
           height: '50%',
         }}
+        onClick={e => e.stopPropagation()}
       >
         {children}
-      </div>
-    </div>
+      </ModalContent>
+    </EmailDiv>
   );
 };
 
@@ -130,6 +125,7 @@ const EmailAuthModal: React.FC<ModalProps> = ({ isOpen, onClose, onVerifySuccess
           onVerifySuccess(); // 부모 컴포넌트에서 전달받은 콜백 함수 호출
         }
         enhancedOnClose();
+        alert('이메일 인증 성공');
       } else {
         throw new Error('인증 실패');
       }
@@ -183,7 +179,7 @@ const EmailAuthModal: React.FC<ModalProps> = ({ isOpen, onClose, onVerifySuccess
             maxLength={1}
             style={{
               textAlign: 'center',
-              height: '45px',
+              height: '200%',
               backgroundColor: '#d8dfe378',
               width: '40px',
             }}
