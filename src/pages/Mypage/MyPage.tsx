@@ -12,7 +12,6 @@ const MyPage = () => {
   const navigate = useNavigate();
   const [isReadOnly, setIsReadOnly] = useState(true);
   const nickNameRef = useRef<HTMLInputElement>(null);
-  // const { email, nickname } = useAuthStore();
   const { nickname, email, setAuthInfo, memberId } = useAuthStore(state => ({
     nickname: state.nickname,
     email: state.email,
@@ -21,7 +20,7 @@ const MyPage = () => {
   }));
 
   const [nickName, setNickname] = useState(nickname); //저장소에서 받아오기
-  const [password, setPassword] = useState('1234'); //서버에서 받아오기
+  const [password, setPassword] = useState('12345678'); //서버에서 받아오기
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { themeColor } = useTheTheme();
 
@@ -153,6 +152,8 @@ const MyPage = () => {
                 readOnly={isReadOnly}
                 name="password"
                 onChange={OnChange}
+                value={password}
+                type="password"
               />
               <Edit onClick={() => handleEditClick()} />
               <Confirmpassword isOpen={isModalOpen} onClose={onCloseModal} theme={themeColor} />
